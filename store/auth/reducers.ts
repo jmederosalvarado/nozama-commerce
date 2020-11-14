@@ -9,7 +9,6 @@ const initialState: AuthState = {
     username: "jmederos",
     password: "jmederos",
     name: "Jorge Mederos",
-    rating: 5,
   },
 };
 

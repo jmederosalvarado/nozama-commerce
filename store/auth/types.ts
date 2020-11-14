@@ -1,4 +1,4 @@
-import { UserPreview } from "../../types/user";
+import { UserPreview } from "../../types/users";
 
 export type AuthState = {
   user: UserPreview | null;

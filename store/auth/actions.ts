@@ -1,4 +1,4 @@
-import { UserPreview } from "../../types/user";
+import { UserPreview } from "../../types/users";
 import { LogInAction, LogOutAction } from "./types";
 
 export function login(user: UserPreview): LogInAction {
