@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { OfferPreview } from "../types/offers";
-import { mockapi } from "../fetch/clients";
+import { api, mockapi } from "../fetch/clients";
 import OfferCard from "../components/offers/offer-card";
 import SellerCard from "../components/sellers/seller-card";
 import AuctionCard from "../components/auctions/auction-card";
@@ -14,7 +14,7 @@ function TopOffersSection() {
   useEffect(() => {
     async function fetchTopOffers() {
       try {
-        const { data } = await mockapi.get<OfferPreview[]>("offers/top");
+        const { data } = await api.get<OfferPreview[]>("offers/top");
         setOffers(data);
       } catch (error) {}
     }
@@ -48,7 +48,7 @@ function TopAuctionsSection() {
   useEffect(() => {
     async function fetchTopAuctions() {
       try {
-        const { data } = await mockapi.get<AuctionPreview[]>("auctions/top");
+        const { data } = await api.get<AuctionPreview[]>("auctions/top");
         setAuctions(data);
       } catch (error) {}
     }
@@ -82,7 +82,7 @@ function TopSellersSection() {
   useEffect(() => {
     async function fetchTopSellers() {
       try {
-        const { data } = await mockapi.get<SellerPreview[]>("sellers/top");
+        const { data } = await api.get<SellerPreview[]>("sellers/top");
         setSellers(data);
       } catch (error) {}
     }

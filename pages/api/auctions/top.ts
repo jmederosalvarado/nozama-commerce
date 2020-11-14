@@ -14,15 +14,13 @@ export default async function handler(
     take: 3,
     orderBy: { bids: "desc" },
   });
-  const topAuction: AuctionPreview[] = [];
-  for (let i; i < result.length; i++) {
-    topAuction.push({
-      id: String(result[i].id),
-      name: result[i].product,
-      price: result[i].currentPrice,
-      bids: result[i].bids,
-      image: result[i].image,
-    });
-  }
-  res.status(200).json(topAuction);
+  res.status(200).json(
+    result.map((r) => ({
+      id: String(r.id),
+      name: r.product,
+      price: r.currentPrice,
+      bids: r.bids,
+      image: r.image,
+    }))
+  );
 }
