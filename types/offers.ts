@@ -14,7 +14,7 @@ export type OfferDetails = {
   price: number;
   rating: number;
 };
-
+//aqui falta por poner seller
 export type OfferNew = {
   name: string;
   description: string;
