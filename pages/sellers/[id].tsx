@@ -21,6 +21,7 @@ export default function SellerPage() {
       } catch (error) {}
     }
 
+    if (!id) return;
     fetchSeller();
   }, [id]);
 
@@ -37,6 +38,7 @@ export default function SellerPage() {
       } catch (error) {}
     }
 
+    if (!id) return;
     fetchOffers();
   }, [id]);
 
@@ -53,6 +55,7 @@ export default function SellerPage() {
       } catch (error) {}
     }
 
+    if (!id) return;
     fetchAuctions();
   }, [id]);
 

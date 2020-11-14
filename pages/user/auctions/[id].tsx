@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { mockapi } from "../../../fetch/clients";
+import { api } from "../../../fetch/clients";
 import { AuctionDetails } from "../../../types/auctions";
 
 export default function AuctionDetailsPage() {
@@ -11,11 +11,12 @@ export default function AuctionDetailsPage() {
   useEffect(() => {
     async function fetchAuction() {
       try {
-        const { data } = await mockapi.get<AuctionDetails>(`auctions/${id}`);
+        const { data } = await api.get<AuctionDetails>(`auctions/${id}`);
         setAuction(data);
       } catch (error) {}
     }
 
+    if (!id) return;
     fetchAuction();
   }, [id]);
 
@@ -108,7 +109,20 @@ export default function AuctionDetailsPage() {
           </label>
         </div>
         <div className="mt-5">
-          <button className="bg-indigo-400 hover:bg-indigo-500 focus:outline-none px-3 rounded-full py-1 text-white font-bold uppercase tracking-wide text-sm">
+          <button
+            className="bg-indigo-400 hover:bg-indigo-500 focus:outline-none px-3 rounded-full py-1 text-white font-bold uppercase tracking-wide text-sm"
+            onClick={async () => {
+              try {
+                const { data } = await api.put<AuctionDetails>(
+                  `/auctions/${auction.id}`,
+                  auction
+                );
+                setAuction(data);
+              } catch (error) {
+                console.log(error.response);
+              }
+            }}
+          >
             Save
           </button>
         </div>

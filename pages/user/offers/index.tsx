@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import OfferCard from "../../../components/offers/offer-card";
 import { OfferPreview } from "../../../types/offers";
-import { mockapi } from "../../../fetch/clients";
+import { api } from "../../../fetch/clients";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import Link from "next/link";
@@ -9,12 +9,13 @@ import PlusIconSM from "../../../components/icons/heroicons/small/plus";
 
 export default function UserOffers() {
   const { user } = useSelector((state: RootState) => state.auth);
+  const [reload, setReload] = useState<boolean>(false);
 
   const [offers, setOffers] = useState<OfferPreview[]>();
   useEffect(() => {
     async function fetchOffers() {
       try {
-        const { data } = await mockapi.get<OfferPreview[]>("offers", {
+        const { data } = await api.get<OfferPreview[]>("offers", {
           params: {
             seller: user && user.username,
           },
@@ -24,7 +25,7 @@ export default function UserOffers() {
     }
 
     fetchOffers();
-  }, [user]);
+  }, [user, reload]);
 
   return (
     <div className="container mx-auto">
@@ -39,7 +40,17 @@ export default function UserOffers() {
       <div className="mt-2 md:mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-8 gap-8 place-items-center">
         {offers &&
           offers.map((offer, i) => (
-            <OfferCard offer={offer} editable key={i} />
+            <OfferCard
+              offer={offer}
+              editable
+              onDelete={async () => {
+                try {
+                  await api.delete(`/offers/${offer.id}`);
+                  setReload((r) => !r);
+                } catch (error) {}
+              }}
+              key={i}
+            />
           ))}
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AuctionCard from "../../components/auctions/auction-card";
 import { AuctionPreview } from "../../types/auctions";
-import { mockapi } from "../../fetch/clients";
+import { api } from "../../fetch/clients";
 
 export default function Auctions() {
   const [auctions, setAuctions] = useState<AuctionPreview[]>();
@@ -9,7 +9,7 @@ export default function Auctions() {
   useEffect(() => {
     async function fetchAuctions() {
       try {
-        const { data } = await mockapi.get<AuctionPreview[]>("auctions");
+        const { data } = await api.get<AuctionPreview[]>("auctions");
         setAuctions(data);
       } catch (error) {}
     }

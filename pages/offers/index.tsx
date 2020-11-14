@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import OfferCard from "../../components/offers/offer-card";
 import { OfferPreview } from "../../types/offers";
-import { mockapi } from "../../fetch/clients";
+import { api } from "../../fetch/clients";
 
 export default function Offers() {
   const [offers, setOffers] = useState<OfferPreview[]>();
@@ -9,7 +9,7 @@ export default function Offers() {
   useEffect(() => {
     async function fetchOffers() {
       try {
-        const { data } = await mockapi.get<OfferPreview[]>("offers");
+        const { data } = await api.get<OfferPreview[]>("offers");
         setOffers(data);
       } catch (error) {}
     }
