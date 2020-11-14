@@ -1,9 +1,12 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { api } from "../../../fetch/clients";
 import { RootState } from "../../../store";
-import { AuctionNew } from "../../../types/auctions";
+import { AuctionDetails, AuctionNew } from "../../../types/auctions";
 
 export default function AuctionNewPage() {
+  const router = useRouter();
   const { user } = useSelector((state: RootState) => state.auth);
   const [auction, setAuction] = useState<AuctionNew>({
     name: "",
@@ -116,7 +119,18 @@ export default function AuctionNewPage() {
           </label>
         </div>
         <div className="mt-5">
-          <button className="bg-indigo-400 hover:bg-indigo-500 focus:outline-none px-3 rounded-full py-1 text-white font-bold uppercase tracking-wide text-sm">
+          <button
+            className="bg-indigo-400 hover:bg-indigo-500 focus:outline-none px-3 rounded-full py-1 text-white font-bold uppercase tracking-wide text-sm"
+            onClick={async () => {
+              try {
+                const { data } = await api.post<AuctionDetails>(
+                  `/auctions`,
+                  auction
+                );
+                router.push("/user/auctions/[id]", `/user/auctions/${data.id}`);
+              } catch (error) {}
+            }}
+          >
             Save
           </button>
         </div>
