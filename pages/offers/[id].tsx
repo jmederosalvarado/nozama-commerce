@@ -4,7 +4,7 @@ import CurrencyDollarIconSM from "../../components/icons/heroicons/small/currenc
 import ShoppingCartIconSM from "../../components/icons/heroicons/small/shopping-cart";
 import StarIconSM from "../../components/icons/heroicons/small/star";
 import { OfferDetails } from "../../types/offers";
-import { mockapi } from "../../fetch/clients";
+import { api } from "../../fetch/clients";
 import { useDispatch, useSelector } from "react-redux";
 import { cartAdd } from "../../store/cart/actions";
 import { RootState } from "../../store";
@@ -19,7 +19,7 @@ export default function OfferPage() {
   useEffect(() => {
     async function fetchOffer() {
       try {
-        const { data } = await mockapi.get<OfferDetails>(`offers/${id}`);
+        const { data } = await api.get<OfferDetails>(`offers/${id}`);
         setOffer(data);
       } catch (error) {}
     }
