@@ -1,9 +1,12 @@
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { api } from "../../../fetch/clients";
 import { RootState } from "../../../store";
-import { OfferNew } from "../../../types/offers";
+import { OfferDetails, OfferNew } from "../../../types/offers";
 
 export default function OfferNewPage() {
+  const router = useRouter();
   const { user } = useSelector((state: RootState) => state.auth);
   const [offer, setOffer] = useState<OfferNew>({
     name: "",
@@ -97,7 +100,15 @@ export default function OfferNewPage() {
           </label>
         </div>
         <div className="mt-5">
-          <button className="bg-indigo-400 hover:bg-indigo-500 focus:outline-none px-3 rounded-full py-1 text-white font-bold uppercase tracking-wide text-sm">
+          <button
+            className="bg-indigo-400 hover:bg-indigo-500 focus:outline-none px-3 rounded-full py-1 text-white font-bold uppercase tracking-wide text-sm"
+            onClick={async () => {
+              try {
+                const { data } = await api.post<OfferDetails>(`/offers`, offer);
+                router.push("/user/offers/[id]", `/user/offers/${data.id}`);
+              } catch (error) {}
+            }}
+          >
             Save
           </button>
         </div>
