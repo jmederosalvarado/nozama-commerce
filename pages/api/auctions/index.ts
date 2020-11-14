@@ -78,7 +78,7 @@ async function createAuction(req: NextApiRequest) {
     seller: idSeller,
     image,
     price,
-    closing,
+    duration:closing,
   } = req.body;
   const pr = String(prod);
   const prD = String(prodDescription);
@@ -86,7 +86,7 @@ async function createAuction(req: NextApiRequest) {
   const im = String(image);
   const pric = parseInt(String(price));
   const rate = 5;
-  const closin = String(closing);
+  const closin = parseFloat(String(closing));
 
   try {
     const result = await prisma.auction.create({
@@ -97,7 +97,7 @@ async function createAuction(req: NextApiRequest) {
         image: im,
         currentPrice: pric,
         rating: rate,
-        closing: closin,
+        closing: new Date(Date.now()+closin*60*60*1000).toISOString(),
       },
     });
     return result;
