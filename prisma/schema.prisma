@@ -1,0 +1,44 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgres://rxcotjlsmeftyj:4abda14ae89d1956d8d205b4a7414f87dc75e273877e2d4265d9bd220375c056@ec2-34-237-247-76.compute-1.amazonaws.com:5432/dcm5up7clk4lfb"
+}
+
+model Auction {
+  id                 String  @id
+  closing            String
+  currentPrice       Int
+  idBidder           Int
+  product            String
+  productDescription String
+  idSeller           String
+  rating             Int
+  image              String?
+}
+
+model Offer {
+  id                 String  @id
+  product            String
+  productDescription String
+  idSeller           String
+  price              Int
+  rating             Int
+  image              String?
+}
+
+model User {
+  name     String?
+  email    String? @unique
+  rating   Int?
+  password String
+  username String  @id
+  image    String?
+}
+
+model BankAccount {
+  number  String @id
+  balance Float
+}
