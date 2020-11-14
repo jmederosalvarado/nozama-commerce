@@ -1,9 +1,13 @@
 import { PrismaClient } from "@prisma/client";
+import faker from "faker";
+import { NextApiRequest, NextApiResponse } from "next";
 
-const faker = require("faker");
 const prisma = new PrismaClient();
 
-export default async function populate() {
+export default async function populate(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   for (let i = 0; i < 100; i++) {
     var user1 = faker.internet.userName();
     var ima1 = faker.image.dataUri();
@@ -76,8 +80,10 @@ export default async function populate() {
           },
         });
       }
-    } catch (Error) {
-      console.log("Something happened");
+    } catch (error) {
+      console.log(error);
     }
   }
+
+  res.status(200).end("database populated");
 }
