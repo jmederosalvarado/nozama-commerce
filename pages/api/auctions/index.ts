@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { OfferPreview } from "../../../types/offers";
 import { Auction, PrismaClient } from "@prisma/client";
-import { AuctionPreview } from "../../../types/auctions";
+import { AuctionPreview ,AuctionDetails} from "../../../types/auctions";
 
 const prisma = new PrismaClient();
 
@@ -27,26 +27,27 @@ const prisma = new PrismaClient();
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<AuctionPreview | AuctionPreview[]>
+  res: NextApiResponse<AuctionDetails | AuctionPreview[]>
 ) {
   if (req.method == "GET") {
     const result = await getAllAuction(req);
     if (result == null) {
       res.status(401).end();
-    } else {
-      const offer: AuctionPreview[] = [];
-      for (let i = 0; i < result.length; i++) {
-        offer.push({
-          id: String(result[i].id),
-          name: result[i].product,
-          price: result[i].currentPrice,
-          bids: result[i].bids,
-          image: result[i].image,
-        });
+    } 
+    else {
+      res.status(200).json(  
+        result.map((r) => ({
+          id: String(r.id),
+          name: r.product,
+          price: r.currentPrice,
+          bids: r.bids,
+          image: r.image,
+        }))
+      );
       }
-      res.status(200).json(offer);
+
     }
-  } else if (req.method == "POST") {
+   else if (req.method == "POST") {
     const result = await createAuction(req);
     const offer = result as Auction;
     if (result == "Error in creation") {
@@ -62,6 +63,8 @@ export default async function handler(
             image: offer.image,
             price: offer.currentPrice,
             bids: offer.bids,
+            description: offer.productDescription,
+            closing: offer.closing
           });
   }
 }

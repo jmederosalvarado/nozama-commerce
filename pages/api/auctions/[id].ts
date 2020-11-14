@@ -44,14 +44,7 @@ export default async function handler(
     }
     result == null
       ? res.status(401).end()
-      : res.status(200).json({
-          id: String(auction.id),
-          name: auction.product,
-          description: auction.productDescription,
-          price: auction.currentPrice,
-          closing: result.closing,
-          bids: result.bids,
-        });
+      : res.status(200).end();
   }
 }
 
