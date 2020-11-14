@@ -20,6 +20,7 @@ export type AuctionNew = {
   name: string;
   description: string;
   image?: string;
+  seller: string;
   price: number;
   duration: number;
 };

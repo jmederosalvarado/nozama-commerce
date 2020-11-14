@@ -1,11 +1,15 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 import { AuctionNew } from "../../../types/auctions";
 
 export default function AuctionNewPage() {
+  const { user } = useSelector((state: RootState) => state.auth);
   const [auction, setAuction] = useState<AuctionNew>({
     name: "",
     description: "",
     price: -1,
+    seller: user && user.username,
     duration: -1,
   });
 
