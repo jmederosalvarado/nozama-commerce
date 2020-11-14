@@ -1,3 +1,4 @@
+import { AxiosError } from "axios";
 import Link from "next/link";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,8 +17,8 @@ function LoginRegisterMenu({
   handleLogin,
   handleRegister,
 }: LoginRegisterMenuProps) {
-  const [username, setUsername] = useState<string>(undefined);
-  const [password, setPassword] = useState<string>(undefined);
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   return (
     <div
@@ -81,11 +82,7 @@ export default function AuthMenu() {
           }}
         >
           <img
-            src={
-              user && user.image
-                ? `data:image/png;base64,${user.image}`
-                : "/img/user.jpg"
-            }
+            src={(user && user.image) || "/img/user.jpg"}
             className="w-full h-full object-cover object-center"
           />
         </button>
@@ -95,23 +92,23 @@ export default function AuthMenu() {
         <LoginRegisterMenu
           handleLogin={async (username, password) => {
             try {
-              // const { data } = await api.get<UserPreview>("/users/login", {
-              //   params: {
-              //     username: username,
-              //     password: password,
-              //   },
-              // });
-              // dispatch(login(data));
+              const { data } = await api.get<UserPreview>("/users/login", {
+                params: {
+                  username: username,
+                  password: password,
+                },
+              });
+              dispatch(login(data));
             } catch (error) {}
             setShowMenu(false);
           }}
           handleRegister={async (username, password) => {
             try {
-              // const { data } = await api.post<UserPreview>("/users/login", {
-              //   username: username,
-              //   password: password,
-              // });
-              // dispatch(login(data));
+              const { data } = await api.post<UserPreview>("/users/register", {
+                username: username,
+                password: password,
+              });
+              dispatch(login(data));
             } catch (error) {}
             setShowMenu(false);
           }}
@@ -128,22 +125,42 @@ export default function AuthMenu() {
               {`Welcome ${user.username}`}
             </div>
             <Link href="/user/offers">
-              <a className="mt-3 rounded-full px-5 py-1 font-bold focus:outline-none hover:text-indigo-500 text-center">
+              <a
+                className="mt-3 rounded-full px-5 py-1 font-bold focus:outline-none hover:text-indigo-500 text-center"
+                onClick={() => {
+                  setShowMenu(false);
+                }}
+              >
                 View Offers
               </a>
             </Link>
             <Link href="/user/auctions">
-              <a className="mt-1 rounded-full px-5 py-1 font-bold focus:outline-none hover:text-indigo-500 text-center">
+              <a
+                className="mt-1 rounded-full px-5 py-1 font-bold focus:outline-none hover:text-indigo-500 text-center"
+                onClick={() => {
+                  setShowMenu(false);
+                }}
+              >
                 View Auctions
               </a>
             </Link>
             <Link href="/user">
-              <a className="mt-1 rounded-full px-5 py-1 font-bold focus:outline-none hover:text-indigo-500 text-center">
+              <a
+                className="mt-1 rounded-full px-5 py-1 font-bold focus:outline-none hover:text-indigo-500 text-center"
+                onClick={() => {
+                  setShowMenu(false);
+                }}
+              >
                 View Profile
               </a>
             </Link>
             <Link href="/user/cart">
-              <a className="mt-1 rounded-full px-5 py-1 font-bold focus:outline-none hover:text-indigo-500 text-center">
+              <a
+                className="mt-1 rounded-full px-5 py-1 font-bold focus:outline-none hover:text-indigo-500 text-center"
+                onClick={() => {
+                  setShowMenu(false);
+                }}
+              >
                 View Cart
               </a>
             </Link>

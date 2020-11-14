@@ -1,15 +1,15 @@
 import { AuthAction, AuthState } from "./types";
 
-// const initialState: AuthState = {
-//   user: null,
-// };
-
 const initialState: AuthState = {
-  user: {
-    username: "jmederos",
-    password: "jmederos",
-  },
+  user: null,
 };
+
+// const initialState: AuthState = {
+//   user: {
+//     username: "jmederos",
+//     password: "jmederos",
+//   },
+// };
 
 export function authReducer(
   state: AuthState = initialState,
