@@ -49,7 +49,7 @@ export default function UserAuctions() {
               //     setReload((r) => !r);
               //   } catch (error) {}
               // }}
-              // key={i}
+              key={i}
             />
           ))}
       </div>

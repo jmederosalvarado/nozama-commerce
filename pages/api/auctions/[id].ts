@@ -30,6 +30,7 @@ export default async function handler(
       : res.status(200).json({
           id: String(result.id),
           name: result.product,
+          image: result.image,
           description: result.productDescription,
           price: result.currentPrice,
           bids: result.bids,
