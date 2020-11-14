@@ -29,7 +29,7 @@ export default async function populate(
 
     var date = new Date(Date.now());
     date.setHours(date.getHours() + rat1);
-    var almostDate = date.toISOString().split(".")[0];
+    var almostDate = date.toISOString();
 
     // var ima3 = faker.image.dataUri(400, 400);
     var ima3 = images[Math.floor(Math.random() * images.length)];
