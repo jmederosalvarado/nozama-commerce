@@ -2,7 +2,7 @@ import StarIconSM from "../icons/heroicons/small/star";
 import { OfferDetails } from "../../types/offers";
 import CurrencyDollarIconSM from "../icons/heroicons/small/currency-dollar";
 import { useEffect, useState } from "react";
-import { mockapi } from "../../fetch/clients";
+import { api } from "../../fetch/clients";
 
 export type CartOfferProps = {
   id: string;
@@ -14,7 +14,7 @@ export default function CartOffer({ id }: CartOfferProps) {
   useEffect(() => {
     async function fetchOffer() {
       try {
-        const { data } = await mockapi.get<OfferDetails>(`offers/${id}`);
+        const { data } = await api.get<OfferDetails>(`offers/${id}`);
         setOffer(data);
       } catch (error) {}
     }
