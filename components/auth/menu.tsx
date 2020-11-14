@@ -69,6 +69,7 @@ function LoginRegisterMenu({
 
 export default function AuthMenu() {
   const dispatch = useDispatch();
+  const [reload, setReload] = useState<boolean>(false);
   const { user } = useSelector((state: RootState) => state.auth);
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
@@ -99,6 +100,7 @@ export default function AuthMenu() {
                 },
               });
               dispatch(login(data));
+              setReload((r) => !r);
             } catch (error) {}
             setShowMenu(false);
           }}
@@ -109,6 +111,7 @@ export default function AuthMenu() {
                 password: password,
               });
               dispatch(login(data));
+              setReload((r) => !r);
             } catch (error) {}
             setShowMenu(false);
           }}
