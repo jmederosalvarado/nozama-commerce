@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { mockapi } from "../../../fetch/clients";
+import { api } from "../../../fetch/clients";
 import { OfferDetails } from "../../../types/offers";
 
 export default function OfferDetailsPage() {
@@ -11,7 +11,7 @@ export default function OfferDetailsPage() {
   useEffect(() => {
     async function fetchOffer() {
       try {
-        const { data } = await mockapi.get<OfferDetails>(`offers/${id}`);
+        const { data } = await api.get<OfferDetails>(`offers/${id}`);
         setOffer(data);
       } catch (error) {}
     }
@@ -109,7 +109,18 @@ export default function OfferDetailsPage() {
           </label>
         </div>
         <div className="mt-5">
-          <button className="bg-indigo-400 hover:bg-indigo-500 focus:outline-none px-3 rounded-full py-1 text-white font-bold uppercase tracking-wide text-sm">
+          <button
+            className="bg-indigo-400 hover:bg-indigo-500 focus:outline-none px-3 rounded-full py-1 text-white font-bold uppercase tracking-wide text-sm"
+            onClick={async () => {
+              try {
+                const { data } = await api.put<OfferDetails>(
+                  `/offers/${offer.id}`,
+                  offer
+                );
+                setOffer(data);
+              } catch (error) {}
+            }}
+          >
             Save
           </button>
         </div>

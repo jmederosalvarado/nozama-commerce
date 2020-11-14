@@ -9,7 +9,7 @@ import AuctionCard from "../../../components/auctions/auction-card";
 
 export default function UserAuctions() {
   const { user } = useSelector((state: RootState) => state.auth);
-  const [reload, setReload] = useState<boolean>(false);
+  // const [reload, setReload] = useState<boolean>(false);
 
   const [auctions, setAuctions] = useState<AuctionPreview[]>();
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function UserAuctions() {
     }
 
     fetchAuctions();
-  }, [user, reload]);
+  }, [user]);
 
   return (
     <div className="container mx-auto">

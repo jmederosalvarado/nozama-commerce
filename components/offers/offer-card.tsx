@@ -8,9 +8,14 @@ import TrashIconSM from "../icons/heroicons/small/trash";
 export type OfferCardProps = {
   offer: OfferPreview;
   editable?: boolean;
+  onDelete?: () => void;
 };
 
-export default function OfferCard({ offer, editable = false }: OfferCardProps) {
+export default function OfferCard({
+  offer,
+  onDelete,
+  editable = false,
+}: OfferCardProps) {
   return (
     <div className="w-full max-w-xs">
       <div className="relative aspect-ratio-5/4 rounded-lg overflow-hidden shadow-lg">
@@ -47,7 +52,10 @@ export default function OfferCard({ offer, editable = false }: OfferCardProps) {
                     <PencilIconSM className="w-4 h-4" />
                   </a>
                 </Link>
-                <button className="text-gray-600 hover:text-indigo-600 focus:outline-none ml-1">
+                <button
+                  className="text-gray-600 hover:text-indigo-600 focus:outline-none ml-1"
+                  onClick={onDelete}
+                >
                   <TrashIconSM className="w-4 h-4" />
                 </button>
               </>
