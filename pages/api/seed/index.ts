@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import faker from "faker";
 import { NextApiRequest, NextApiResponse } from "next";
+import images from "./images.json";
 
 const prisma = new PrismaClient();
 
