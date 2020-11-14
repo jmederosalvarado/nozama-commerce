@@ -2,17 +2,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// datasource db {
-//   provider = "sqlite"
-//   url      = "file:./nozama.db"
-// }
 datasource db {
   provider = "sqlite"
   url      = "file:./nozama.db"
 }
 
 model Auction {
-  id                 Int  @id @default(autoincrement())
+  id                 Int     @id @default(autoincrement())
   product            String
   productDescription String
   idSeller           String
@@ -21,11 +17,11 @@ model Auction {
   closing            String
   currentPrice       Int
   idBidder           String?
-  bids               Int @default(0)
+  bids               Int     @default(0)
 }
 
 model Offer {
-  id                 Int  @id @default(autoincrement()) 
+  id                 Int     @id @default(autoincrement())
   product            String
   productDescription String
   idSeller           String
@@ -42,6 +38,6 @@ model User {
 }
 
 model BankAccount {
-  number  Int @id
+  number  Int   @id
   balance Float
 }
