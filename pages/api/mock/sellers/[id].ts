@@ -6,7 +6,7 @@ export default function handler(
   res: NextApiResponse<SellerDetails>
 ) {
   res.status(200).json({
-    id: `${req.query.id}`,
+    username: `${req.query.id}`,
     name: "Jorge Mederos",
     rating: 5,
   });

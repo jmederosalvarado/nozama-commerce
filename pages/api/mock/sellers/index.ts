@@ -8,7 +8,7 @@ export default function handler(
   const sellers: SellerPreview[] = [];
   for (let i = 0; i < 25; i++) {
     sellers.push({
-      id: `id-${i}`,
+      username: `id-${i}`,
       name: "Jorge Mederos",
       rating: 4.5,
     });
