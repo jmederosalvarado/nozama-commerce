@@ -9,7 +9,6 @@ export default function handler(
   for (let i = 0; i < 3; i++) {
     sellers.push({
       username: `id-${i}`,
-      name: "Jorge Mederos",
       rating: 4.5,
     });
   }

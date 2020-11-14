@@ -74,7 +74,7 @@ export default function SellerPage() {
             src={seller.image || "/img/user.jpg"}
           />
           <div className="flex items-center justify-center py-2 bg-gray-100 bg-opacity-75 backdrop-blur absolute z-10 bottom-0 inset-x-0">
-            <div className="font-bold text-gray-600">{seller.name}</div>
+            <div className="font-bold text-gray-600">{seller.username}</div>
             <div className="flex items-center justify-center border-l-2 border-gray-500 ml-5 pl-5">
               <span className="font-extrabold text-gray-600 text-sm">
                 {seller.rating}

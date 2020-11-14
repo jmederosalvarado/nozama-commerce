@@ -7,7 +7,6 @@ export default function handler(
 ) {
   res.status(200).json({
     username: `${req.query.id}`,
-    name: "Jorge Mederos",
     rating: 5,
   });
 }

@@ -16,7 +16,6 @@ export default async function handler(
       : res.status(200).json({
           username: result.username,
           image: result.image,
-          name: "",
           rating: result.rating,
         });
   } else if (req.method == "DELETE") {
@@ -33,7 +32,6 @@ export default async function handler(
       ? res.status(401).end()
       : res.status(200).json({
           username: result.username,
-          name: "",
           rating: result.rating,
           image: result.image,
         });

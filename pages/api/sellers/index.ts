@@ -20,7 +20,6 @@ export default async function handler(
       for (let i = 0; i < result.length; i++) {
         user.push({
           username: result[i].username,
-          name: "",
           rating: result[i].rating,
           image: result[i].image,
         });
