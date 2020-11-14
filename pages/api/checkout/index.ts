@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import {Auction, PrismaClient, User, Offer, BankAccount} from "@prisma/client"
-import { UserPreview } from "../../../types/user";
+
 import { request } from "http";
 import { AuctionDetails, AuctionPreview } from "../../../types/auctions";
 
@@ -35,7 +35,6 @@ async function postCheckout(
   const offs = offers as Offer[]  
   var pric = 0
   const bkacct = parseInt(String(bankaccount))  
-  const user: UserPreview[] = [];
   for (let i = 0; i < offs.length; i++) {
     pric+=offs[i].price
   }

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { UserPreview } from "../../../types/user";
+import { UserPreview } from "../../../types/users";
 import { PrismaClient } from "@prisma/client";
 import { stringify } from "querystring";
 
@@ -35,7 +35,7 @@ export default async function handler(
   try 
   {
     const result = await prisma.user.create({data:{ username: user,password : passw,image:im}})
-    res.status(200).json({username: result.username, password: result.password,image: result.image})
+    res.status(200).json({username: result.username, password: result.password,image: result.image,name:''})
   } 
   catch(Error)
   {

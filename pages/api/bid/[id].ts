@@ -1,6 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import {Auction, PrismaClient, User} from "@prisma/client"
-import { UserPreview } from "../../../types/user";
 import { request } from "http";
 import { AuctionDetails, AuctionPreview } from "../../../types/auctions";
 

@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { UserPreview } from "../../../types/user";
+import { UserPreview } from "../../../types/users";
 import {PrismaClient} from "@prisma/client"
 // export default function handler(
 //   req: NextApiRequest,
@@ -40,7 +40,7 @@ export default async function handler(
     {
       if (passw === userByUsername.password)
       {
-        res.status(200).json({username: userByUsername.username,password:userByUsername.password});
+        res.status(200).json({username: userByUsername.username,password:userByUsername.password, name:''});
       }
       else
       {

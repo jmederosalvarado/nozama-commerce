@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import {PrismaClient, User} from "@prisma/client"
-import { UserPreview } from "../../../types/user";
+import { UserPreview } from "../../../types/users";
 import { request } from "http";
 
  const prisma = new PrismaClient()
@@ -24,6 +24,7 @@ export default async function handler(
         user.push({
           username: result[i].username,
           password: result[i].username,
+          name:''
           
         });
       }
@@ -40,7 +41,7 @@ export default async function handler(
       res.status(401).end();
       return
     }
-    result == null ? res.status(401).end() : res.status(200).json({username:user.username,password:user.password})
+    result == null ? res.status(401).end() : res.status(200).json({username:user.username,password:user.password,name:''})
 
    }
   }

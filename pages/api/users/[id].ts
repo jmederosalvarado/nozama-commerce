@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { UserDetails } from "../../../types/user";
+import { UserDetails } from "../../../types/users";
 import {PrismaClient, User} from "@prisma/client"
 
  const prisma = new PrismaClient()
@@ -12,7 +12,7 @@ import {PrismaClient, User} from "@prisma/client"
     if(req.method == 'GET')
     {
      const result =  await getById(req)
-     result== null ? res.status(401).end() : res.status(200).json({username:result.username, password: result.password})
+     result== null ? res.status(401).end() : res.status(200).json({username:result.username, password: result.password, name:"",image: result.image})
     }
     else if(req.method == 'DELETE')
     {
@@ -28,7 +28,7 @@ import {PrismaClient, User} from "@prisma/client"
     else if (req.method == 'PUT')
     {
       const result = await updateUser(req)
-      result == null ? res.status(401).end() : res.status(200).json({username:result.username, password:result.password,image: result.image})
+      result == null ? res.status(401).end() : res.status(200).json({username:result.username, password:result.password,image: result.image, name:''})
     }
 
   }
