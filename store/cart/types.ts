@@ -1,5 +1,3 @@
-import { UserPreview } from "../../types/users";
-
 export type CartState = {
   offers: string[];
 };
