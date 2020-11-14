@@ -10,12 +10,12 @@ export default async function populate(
 ) {
   for (let i = 0; i < 100; i++) {
     var user1 = faker.internet.userName();
-    var ima1 = faker.image.dataUri();
+    var ima1 = faker.image.dataUri(400, 400);
     var pass1 = faker.internet.password();
     var rat1 = faker.random.number({ min: 1, max: 5 });
 
     var user2 = faker.internet.userName();
-    var ima2 = faker.image.dataUri();
+    var ima2 = faker.image.dataUri(400, 400);
     var pass2 = faker.internet.password();
     var rat2 = faker.random.number({ min: 1, max: 5 });
 
@@ -28,7 +28,7 @@ export default async function populate(
     date.setHours(date.getHours() + rat1);
     var almostDate = date.toISOString().split(".")[0];
 
-    var ima3 = faker.image.dataUri();
+    var ima3 = faker.image.dataUri(400, 400);
     var prod = faker.commerce.productName();
     var prodDescrition = faker.commerce.productDescription();
     var bids = faker.random.number({ min: 1, max: 15 });
