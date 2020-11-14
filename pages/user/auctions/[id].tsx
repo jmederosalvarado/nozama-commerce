@@ -118,9 +118,7 @@ export default function AuctionDetailsPage() {
                   auction
                 );
                 setAuction(data);
-              } catch (error) {
-                console.log(error.response);
-              }
+              } catch (error) {}
             }}
           >
             Save
