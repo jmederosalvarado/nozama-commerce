@@ -37,6 +37,7 @@ export default async function handler(
     res.status(200).json({
       username: result.username,
       password: result.password,
+      image: result.image,
     });
   } catch (Error) {
     res.status(400).end();

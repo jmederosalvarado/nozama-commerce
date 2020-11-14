@@ -39,6 +39,7 @@ export default async function handler(
       res.status(200).json({
         username: userByUsername.username,
         password: userByUsername.password,
+        image: userByUsername.image,
       });
     } else {
       res.status(401).end();
