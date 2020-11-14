@@ -1,23 +1,28 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { mockapi } from "../../fetch/clients";
+import { useDispatch, useSelector } from "react-redux";
+import { api } from "../../fetch/clients";
+import { RootState } from "../../store";
+import { login } from "../../store/auth/actions";
 import { UserDetails } from "../../types/users";
 
 export default function UserDetailsPage() {
-  const router = useRouter();
-  const id = router.query.id as string;
+  const dispatch = useDispatch();
+  const auth = useSelector((state: RootState) => state.auth);
+  const username = auth.user && auth.user.username;
   const [user, setUser] = useState<UserDetails>();
 
   useEffect(() => {
     async function fetchUser() {
       try {
-        const { data } = await mockapi.get<UserDetails>(`users/${id}`);
+        const { data } = await api.get<UserDetails>(`users/${username}`);
         setUser(data);
       } catch (error) {}
     }
 
+    if (!username) return;
     fetchUser();
-  }, [id]);
+  }, [username]);
 
   if (!user) {
     return <div></div>;
@@ -73,7 +78,19 @@ export default function UserDetailsPage() {
           </label>
         </div>
         <div className="mt-5">
-          <button className="bg-indigo-400 hover:bg-indigo-500 focus:outline-none px-3 rounded-full py-1 text-white font-bold uppercase tracking-wide text-sm">
+          <button
+            className="bg-indigo-400 hover:bg-indigo-500 focus:outline-none px-3 rounded-full py-1 text-white font-bold uppercase tracking-wide text-sm"
+            onClick={async () => {
+              try {
+                const { data } = await api.put<UserDetails>(
+                  `/users/${user.username}`,
+                  user
+                );
+                setUser(data);
+                dispatch(login(data));
+              } catch (error) {}
+            }}
+          >
             Save
           </button>
         </div>
