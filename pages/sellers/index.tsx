@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import SellerCard from "../../components/sellers/seller-card";
 import { SellerPreview } from "../../types/sellers";
-import { mockapi } from "../../fetch/clients";
+import { api } from "../../fetch/clients";
 
 export default function Sellers() {
   const [sellers, setSellers] = useState<SellerPreview[]>();
@@ -9,7 +9,7 @@ export default function Sellers() {
   useEffect(() => {
     async function fetchSellers() {
       try {
-        const { data } = await mockapi.get<SellerPreview[]>("sellers");
+        const { data } = await api.get<SellerPreview[]>("sellers");
         setSellers(data);
       } catch (error) {}
     }

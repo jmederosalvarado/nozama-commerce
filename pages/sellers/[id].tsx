@@ -4,7 +4,7 @@ import StarIconSM from "../../components/icons/heroicons/small/star";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { SellerDetails } from "../../types/sellers";
-import { mockapi } from "../../fetch/clients";
+import { api } from "../../fetch/clients";
 import { OfferPreview } from "../../types/offers";
 import { AuctionPreview } from "../../types/auctions";
 
@@ -16,7 +16,7 @@ export default function SellerPage() {
   useEffect(() => {
     async function fetchSeller() {
       try {
-        const { data } = await mockapi.get<SellerDetails>(`sellers/${id}`);
+        const { data } = await api.get<SellerDetails>(`sellers/${id}`);
         setSeller(data);
       } catch (error) {}
     }
@@ -29,7 +29,7 @@ export default function SellerPage() {
   useEffect(() => {
     async function fetchOffers() {
       try {
-        const { data } = await mockapi.get<OfferPreview[]>(`offers`, {
+        const { data } = await api.get<OfferPreview[]>(`offers`, {
           params: {
             seller: id,
           },
@@ -46,7 +46,7 @@ export default function SellerPage() {
   useEffect(() => {
     async function fetchAuctions() {
       try {
-        const { data } = await mockapi.get<AuctionPreview[]>(`auctions`, {
+        const { data } = await api.get<AuctionPreview[]>(`auctions`, {
           params: {
             seller: id,
           },

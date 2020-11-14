@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { OfferPreview } from "../types/offers";
-import { api, mockapi } from "../fetch/clients";
+import { api } from "../fetch/clients";
 import OfferCard from "../components/offers/offer-card";
 import SellerCard from "../components/sellers/seller-card";
 import AuctionCard from "../components/auctions/auction-card";
