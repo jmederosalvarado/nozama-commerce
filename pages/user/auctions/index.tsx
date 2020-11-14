@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { mockapi } from "../../../fetch/clients";
+import { api } from "../../../fetch/clients";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import Link from "next/link";
@@ -9,12 +9,13 @@ import AuctionCard from "../../../components/auctions/auction-card";
 
 export default function UserAuctions() {
   const { user } = useSelector((state: RootState) => state.auth);
+  const [reload, setReload] = useState<boolean>(false);
 
   const [auctions, setAuctions] = useState<AuctionPreview[]>();
   useEffect(() => {
     async function fetchAuctions() {
       try {
-        const { data } = await mockapi.get<AuctionPreview[]>("auctions", {
+        const { data } = await api.get<AuctionPreview[]>("auctions", {
           params: {
             seller: user && user.username,
           },
@@ -24,7 +25,7 @@ export default function UserAuctions() {
     }
 
     fetchAuctions();
-  }, [user]);
+  }, [user, reload]);
 
   return (
     <div className="container mx-auto">
@@ -39,7 +40,17 @@ export default function UserAuctions() {
       <div className="mt-2 md:mt-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-8 gap-8 place-items-center">
         {auctions &&
           auctions.map((auction, i) => (
-            <AuctionCard auction={auction} editable key={i} />
+            <AuctionCard
+              auction={auction}
+              // editable
+              // onDelete={async () => {
+              //   try {
+              //     await api.delete(`/auctions/${auction.id}`);
+              //     setReload((r) => !r);
+              //   } catch (error) {}
+              // }}
+              // key={i}
+            />
           ))}
       </div>
     </div>

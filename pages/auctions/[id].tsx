@@ -17,7 +17,6 @@ export default function AuctionPage() {
   const [auction, setAuction] = useState<AuctionDetails>();
   const { user } = useSelector((state: RootState) => state.auth);
   const [bid, setBid] = useState(-1);
-  const [reload, setReload] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchAuction() {
@@ -28,7 +27,7 @@ export default function AuctionPage() {
     }
 
     fetchAuction();
-  }, [id, reload]);
+  }, [id, user]);
 
   if (!auction) {
     return <div></div>;
@@ -87,11 +86,14 @@ export default function AuctionPage() {
                         className="bg-indigo-400 hover:bg-indigo-500 flex items-center justify-center absolute left-0 inset-y-0 pl-1 pr-px"
                         onClick={async () => {
                           try {
-                            await api.post(`bid/${auction.id}`, {
-                              bidder: user.username,
-                              price: bid,
-                            });
-                            setReload((r) => !r);
+                            const { data } = await api.post<AuctionDetails>(
+                              `bid/${auction.id}`,
+                              {
+                                bidder: user.username,
+                                price: bid,
+                              }
+                            );
+                            setAuction(data);
                           } catch (error) {}
                         }}
                       >

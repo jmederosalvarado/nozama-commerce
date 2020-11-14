@@ -8,10 +8,12 @@ import UserGroupIconSM from "../icons/heroicons/small/user-group";
 export type AuctionCardProps = {
   auction: AuctionPreview;
   editable?: boolean;
+  onDelete?: () => void;
 };
 
 export default function AuctionCard({
   auction,
+  onDelete,
   editable = false,
 }: AuctionCardProps) {
   return (
@@ -53,7 +55,10 @@ export default function AuctionCard({
                     <PencilIconSM className="w-4 h-4" />
                   </a>
                 </Link>
-                <button className="text-gray-600 hover:text-indigo-600 focus:outline-none ml-1">
+                <button
+                  className="text-gray-600 hover:text-indigo-600 focus:outline-none ml-1"
+                  onClick={onDelete}
+                >
                   <TrashIconSM className="w-4 h-4" />
                 </button>
               </>
