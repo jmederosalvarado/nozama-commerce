@@ -25,21 +25,18 @@ export default async function handler(
   res: NextApiResponse<UserPreview>
 ) {
   //To register, it is required name  username, email, password
-  const { password, image } = req.body;
-  const { id } = req.query;
+  const { password, username } = req.body;
 
-  const user = String(id);
-  const im = String(image);
+  const user = String(username);
   const passw = String(password);
 
   try {
     const result = await prisma.user.create({
-      data: { username: user, password: passw, image: im },
+      data: { username: user, password: passw },
     });
     res.status(200).json({
       username: result.username,
       password: result.password,
-      image: result.image,
     });
   } catch (Error) {
     res.status(400).end();
