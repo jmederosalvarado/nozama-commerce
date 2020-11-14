@@ -22,17 +22,15 @@ export default async function handler(
     }
     result == null
       ? res.status(401).end()
-      : res
-          .status(200)
-          .json({
-            name: auct.product,
-            id: String(auct.id),
-            image: auct.image,
-            price: auct.currentPrice,
-            bids: auct.bids,
-            description: auct.productDescription,
-            closing: auct.closing
-          });
+      : res.status(200).json({
+          name: auct.product,
+          id: String(auct.id),
+          image: auct.image,
+          price: auct.currentPrice,
+          bids: auct.bids,
+          description: auct.productDescription,
+          closing: auct.closing,
+        });
   }
 }
 

@@ -26,16 +26,14 @@ export default async function handler(
     const result = await getById(req);
     result == null
       ? res.status(401).end()
-      : res
-          .status(200)
-          .json({
-            id: String(result.id),
-            name: result.product,
-            description: result.productDescription,
-            price: result.price,
-            rating: result.rating,
-            image: result.image
-          });
+      : res.status(200).json({
+          id: String(result.id),
+          name: result.product,
+          description: result.productDescription,
+          price: result.price,
+          rating: result.rating,
+          image: result.image,
+        });
   } else if (req.method == "DELETE") {
     const result = await deleteOffer(req);
     const offer = result as Offer;
@@ -43,25 +41,19 @@ export default async function handler(
       res.status(401).end();
       return;
     }
-    result == null
-      ? res.status(401).end()
-      : res
-          .status(200)
-        .end();
+    result == null ? res.status(401).end() : res.status(200).end();
   } else if (req.method == "PUT") {
     const offer = await updateOffer(req);
     offer == null
       ? res.status(401).end()
-      : res
-          .status(200)
-          .json({
-            id: String(offer.id),
-            name: offer.product,
-            description: offer.productDescription,
-            price: offer.price,
-            rating: offer.rating,
-            image: offer.image
-          });
+      : res.status(200).json({
+          id: String(offer.id),
+          name: offer.product,
+          description: offer.productDescription,
+          price: offer.price,
+          rating: offer.rating,
+          image: offer.image,
+        });
   }
 }
 
@@ -86,19 +78,31 @@ async function deleteOffer(req: NextApiRequest) {
 }
 
 async function updateOffer(req: NextApiRequest) {
-  const{id} =req.query
-  const {  name:product, description:productDescription, price,rating,image } = req.body;
+  const { id } = req.query;
+  const {
+    name: product,
+    description: productDescription,
+    price,
+    rating,
+    image,
+  } = req.body;
 
   const ID = parseInt(String(id));
   const prod = String(product);
   const prodD = String(productDescription);
   const pric = parseInt(String(price));
   const rate = parseInt(String(rating));
-  const im = String(image)
+  const im = String(image);
 
   const result = await prisma.offer.update({
     where: { id: ID },
-    data: { product: prod, productDescription: prodD, price: pric ,rating:rate, image:im},
+    data: {
+      product: prod,
+      productDescription: prodD,
+      price: pric,
+      rating: rate,
+      image: im,
+    },
   });
   return result;
 }

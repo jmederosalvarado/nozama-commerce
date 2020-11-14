@@ -42,9 +42,7 @@ export default async function handler(
       res.status(401).end();
       return;
     }
-    result == null
-      ? res.status(401).end()
-      : res.status(200).end();
+    result == null ? res.status(401).end() : res.status(200).end();
   }
 }
 

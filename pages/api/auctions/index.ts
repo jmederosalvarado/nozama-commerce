@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { OfferPreview } from "../../../types/offers";
 import { Auction, PrismaClient } from "@prisma/client";
-import { AuctionPreview ,AuctionDetails} from "../../../types/auctions";
+import { AuctionPreview, AuctionDetails } from "../../../types/auctions";
 
 const prisma = new PrismaClient();
 
@@ -33,9 +33,8 @@ export default async function handler(
     const result = await getAllAuction(req);
     if (result == null) {
       res.status(401).end();
-    } 
-    else {
-      res.status(200).json(  
+    } else {
+      res.status(200).json(
         result.map((r) => ({
           id: String(r.id),
           name: r.product,
@@ -44,10 +43,8 @@ export default async function handler(
           image: r.image,
         }))
       );
-      }
-
     }
-   else if (req.method == "POST") {
+  } else if (req.method == "POST") {
     const result = await createAuction(req);
     const offer = result as Auction;
     if (result == "Error in creation") {
@@ -55,17 +52,15 @@ export default async function handler(
     }
     result == null
       ? res.status(401).end()
-      : res
-          .status(200)
-          .json({
-            id: String(offer.id),
-            name: offer.product,
-            image: offer.image,
-            price: offer.currentPrice,
-            bids: offer.bids,
-            description: offer.productDescription,
-            closing: offer.closing
-          });
+      : res.status(200).json({
+          id: String(offer.id),
+          name: offer.product,
+          image: offer.image,
+          price: offer.currentPrice,
+          bids: offer.bids,
+          description: offer.productDescription,
+          closing: offer.closing,
+        });
   }
 }
 
@@ -78,11 +73,11 @@ async function getAllAuction(req: NextApiRequest) {
 
 async function createAuction(req: NextApiRequest) {
   const {
-    name:prod,
-    description:prodDescription,
-    seller:idSeller,
+    name: prod,
+    description: prodDescription,
+    seller: idSeller,
     image,
-    price,        
+    price,
     closing,
   } = req.body;
   const pr = String(prod);

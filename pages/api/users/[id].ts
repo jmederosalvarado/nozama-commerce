@@ -63,15 +63,15 @@ async function deleteUser(req: NextApiRequest) {
 async function updateUser(req: NextApiRequest) {
   //To change password
   const { id } = req.query;
-  const { password,image } = req.body;
+  const { password, image } = req.body;
 
   const ID = String(id);
   const passw = String(password);
-  const im = String(image)
+  const im = String(image);
 
   const result = await prisma.user.update({
     where: { username: ID },
-    data: { password: passw ,image:im},
+    data: { password: passw, image: im },
   });
   return result;
 }

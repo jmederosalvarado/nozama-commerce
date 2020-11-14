@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient, User } from "@prisma/client";
 import { UserPreview } from "../../../types/users";
-import {SellerPreview} from "../../../types/sellers"
+import { SellerPreview } from "../../../types/sellers";
 import { request } from "http";
 
 const prisma = new PrismaClient();
@@ -20,16 +20,15 @@ export default async function handler(
       for (let i = 0; i < result.length; i++) {
         user.push({
           username: result[i].username,
-          name: '',
+          name: "",
           rating: result[i].rating,
-          image: result[i].image
+          image: result[i].image,
         });
       }
       res.status(200).json(user);
     }
-
-    }
   }
+}
 
 async function getAllUser(req: NextApiRequest) {
   //To get all user
@@ -37,4 +36,3 @@ async function getAllUser(req: NextApiRequest) {
   const result = await prisma.user.findMany();
   return result;
 }
-

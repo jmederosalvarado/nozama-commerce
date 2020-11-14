@@ -12,13 +12,13 @@ export default async function populate(
   for (let i = 0; i < 100; i++) {
     var user1 = faker.internet.userName();
     // var ima1 = faker.image.dataUri(400, 400);
-    var ima1 = images[Math.floor(Math.random()*images.length)]
+    var ima1 = images[Math.floor(Math.random() * images.length)];
     var pass1 = faker.internet.password();
     var rat1 = faker.random.number({ min: 1, max: 5 });
 
     var user2 = faker.internet.userName();
     // var ima2 = faker.image.dataUri(400, 400);
-    var ima2 = images[Math.floor(Math.random()*images.length)]
+    var ima2 = images[Math.floor(Math.random() * images.length)];
     var pass2 = faker.internet.password();
     var rat2 = faker.random.number({ min: 1, max: 5 });
 
@@ -32,7 +32,7 @@ export default async function populate(
     var almostDate = date.toISOString().split(".")[0];
 
     // var ima3 = faker.image.dataUri(400, 400);
-    var ima3 = images[Math.floor(Math.random()*images.length)]
+    var ima3 = images[Math.floor(Math.random() * images.length)];
     var prod = faker.commerce.productName();
     var prodDescrition = faker.commerce.productDescription();
     var bids = faker.random.number({ min: 1, max: 15 });
@@ -45,7 +45,6 @@ export default async function populate(
       await prisma.user.create({
         data: { username: user2, password: pass2, image: ima2, rating: rat2 },
       });
-      
 
       if (i % 2 == 0) {
         await prisma.offer.create({

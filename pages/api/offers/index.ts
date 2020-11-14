@@ -51,16 +51,14 @@ export default async function handler(
     }
     result == null
       ? res.status(401).end()
-      : res
-          .status(200)
-          .json({
-            id: String(offer.id),
-            name: offer.product,
-            image: offer.image,
-            price: offer.price,
-            rating: offer.rating,
-            description: offer.productDescription
-          });
+      : res.status(200).json({
+          id: String(offer.id),
+          name: offer.product,
+          image: offer.image,
+          price: offer.price,
+          rating: offer.rating,
+          description: offer.productDescription,
+        });
   }
 }
 
@@ -72,7 +70,13 @@ async function getAllOffer(req: NextApiRequest) {
 }
 
 async function createOffer(req: NextApiRequest) {
-  const { name:prod, description:prodDescription,seller: idSeller, image, price} = req.body;
+  const {
+    name: prod,
+    description: prodDescription,
+    seller: idSeller,
+    image,
+    price,
+  } = req.body;
   const pr = String(prod);
   const prD = String(prodDescription);
   const idS = String(idSeller);

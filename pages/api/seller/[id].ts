@@ -14,10 +14,10 @@ export default async function handler(
     result == null
       ? res.status(401).end()
       : res.status(200).json({
-          username: result.username,          
+          username: result.username,
           image: result.image,
-          name: '',
-          rating: result.rating
+          name: "",
+          rating: result.rating,
         });
   } else if (req.method == "DELETE") {
     const result = await deleteUser(req);
@@ -33,7 +33,7 @@ export default async function handler(
       ? res.status(401).end()
       : res.status(200).json({
           username: result.username,
-          name: '',
+          name: "",
           rating: result.rating,
           image: result.image,
         });
@@ -68,11 +68,10 @@ async function updateUser(req: NextApiRequest) {
   const { image } = req.body;
 
   const ID = String(id);
- 
 
   const result = await prisma.user.update({
     where: { username: ID },
-    data: { image: String(image)},
+    data: { image: String(image) },
   });
   return result;
 }
