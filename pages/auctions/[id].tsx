@@ -7,23 +7,28 @@ import ClockIconSM from "../../components/icons/heroicons/small/clock";
 import CheckIconSM from "../../components/icons/heroicons/small/check";
 import { useEffect, useState } from "react";
 import { AuctionDetails } from "../../types/auctions";
-import { mockapi } from "../../fetch/clients";
+import { api } from "../../fetch/clients";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 export default function AuctionPage() {
   const router = useRouter();
   const id = router.query.id as string;
   const [auction, setAuction] = useState<AuctionDetails>();
+  const { user } = useSelector((state: RootState) => state.auth);
+  const [bid, setBid] = useState(-1);
+  const [reload, setReload] = useState<boolean>(false);
 
   useEffect(() => {
     async function fetchAuction() {
       try {
-        const { data } = await mockapi.get<AuctionDetails>(`auctions/${id}`);
+        const { data } = await api.get<AuctionDetails>(`auctions/${id}`);
         setAuction(data);
       } catch (error) {}
     }
 
     fetchAuction();
-  }, [id]);
+  }, [id, reload]);
 
   if (!auction) {
     return <div></div>;
@@ -68,28 +73,46 @@ export default function AuctionPage() {
               completed,
               formatted: { hours, minutes, seconds },
             }) => (
-              <div className="mt-2 flex items-center justify-center text-gray-600">
-                <ClockIconSM className="w-5 h-5" />
-                <span className="ml-1 text-sm font-bold">
-                  {completed ? "closed" : `${hours}:${minutes}:${seconds}`}
-                </span>
-              </div>
+              <>
+                <div className="mt-2 flex items-center justify-center text-gray-600">
+                  <ClockIconSM className="w-5 h-5" />
+                  <span className="ml-1 text-sm font-bold">
+                    {completed ? "closed" : `${hours}:${minutes}:${seconds}`}
+                  </span>
+                </div>
+                <div className="mt-2 md:mt-3 w-full flex items-center justify-center">
+                  {user && !completed && (
+                    <div className="rounded-full overflow-hidden shadow-xl flex items-center justify-center relative pl-6 w-32">
+                      <button
+                        className="bg-indigo-400 hover:bg-indigo-500 flex items-center justify-center absolute left-0 inset-y-0 pl-1 pr-px"
+                        onClick={async () => {
+                          try {
+                            await api.post(`bid/${auction.id}`, {
+                              bidder: user.username,
+                              price: bid,
+                            });
+                            setReload((r) => !r);
+                          } catch (error) {}
+                        }}
+                      >
+                        <CheckIconSM className="w-5 h-5 text-white" />
+                      </button>
+                      <input
+                        type="number"
+                        value={bid === -1 ? "" : bid}
+                        onChange={(e) => {
+                          e.preventDefault();
+                          const bid = e.target.value;
+                          setBid(bid ? Number.parseFloat(bid) : -1);
+                        }}
+                        className="min-w-0 focus:outline-none bg-white text-center shadow-inner text-gray-600 font-bold"
+                      />
+                    </div>
+                  )}
+                </div>
+              </>
             )}
           />
-          <div className="mt-2 md:mt-3 w-full flex items-center justify-center">
-            <div className="rounded-full overflow-hidden shadow-xl flex items-center justify-center relative pl-6 w-32">
-              <button className="bg-indigo-400 hover:bg-indigo-500 flex items-center justify-center absolute left-0 inset-y-0 pl-1 pr-px">
-                <CheckIconSM className="w-5 h-5 text-white" />
-              </button>
-              <input
-                type="number"
-                step="0.01"
-                min={auction.price}
-                defaultValue={auction.price}
-                className="min-w-0 focus:outline-none bg-white text-center shadow-inner text-gray-600 font-bold"
-              />
-            </div>
-          </div>
         </div>
       </div>
     </div>
