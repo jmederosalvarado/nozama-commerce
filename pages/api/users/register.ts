@@ -3,7 +3,7 @@ import { UserPreview } from "../../../types/users";
 import { PrismaClient } from "@prisma/client";
 import { stringify } from "querystring";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 // export default function handler(
 //   req: NextApiRequest,
@@ -25,21 +25,26 @@ export default async function handler(
   res: NextApiResponse<UserPreview>
 ) {
   //To register, it is required name  username, email, password
-  const { password ,image } = req.body;
-  const {id} = req.query
- 
-  const user = String(id)
-  const im = String(image)
-  const passw = String(password)
+  const { password, image } = req.body;
+  const { id } = req.query;
 
-  try 
-  {
-    const result = await prisma.user.create({data:{ username: user,password : passw,image:im}})
-    res.status(200).json({username: result.username, password: result.password,image: result.image,name:''})
-  } 
-  catch(Error)
-  {
-  res.status(400).end()
+  const user = String(id);
+  const im = String(image);
+  const passw = String(password);
+
+  try {
+    const result = await prisma.user.create({
+      data: { username: user, password: passw, image: im },
+    });
+    res
+      .status(200)
+      .json({
+        username: result.username,
+        password: result.password,
+        image: result.image,
+        name: "",
+      });
+  } catch (Error) {
+    res.status(400).end();
   }
-
 }
