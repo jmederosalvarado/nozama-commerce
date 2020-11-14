@@ -17,7 +17,7 @@ export default function SellerCard({ seller }: SellerCardProps) {
       </div>
 
       <div className="px-10 -mt-16 relative">
-        <div className="p-5 bg-white bg-opacity-50 backdrop-blur rounded-lg shadow-lg">
+        <div className="p-5 bg-white bg-opacity-75 backdrop-blur rounded-lg shadow-lg">
           <div className="text-gray-700 font-bold text-center truncate">
             {seller.username}
           </div>
