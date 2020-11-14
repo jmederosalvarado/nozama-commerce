@@ -5,11 +5,16 @@ import ShoppingCartIconSM from "../../components/icons/heroicons/small/shopping-
 import StarIconSM from "../../components/icons/heroicons/small/star";
 import { OfferDetails } from "../../types/offers";
 import { mockapi } from "../../fetch/clients";
+import { useDispatch, useSelector } from "react-redux";
+import { cartAdd } from "../../store/cart/actions";
+import { RootState } from "../../store";
 
 export default function OfferPage() {
   const router = useRouter();
   const id = router.query.id as string;
   const [offer, setOffer] = useState<OfferDetails>();
+  const { user } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function fetchOffer() {
@@ -60,12 +65,19 @@ export default function OfferPage() {
             </div>
           </div>
           <div className="mt-2 md:mt-3 w-full flex items-center justify-center">
-            <button className="text-white bg-indigo-400 hover:bg-indigo-500 inline-flex items-center justify-center px-3 py-1 rounded-full">
-              <span className="text-sm uppercase font-extrabold tracking-wide">
-                Add to Cart
-              </span>
-              <ShoppingCartIconSM className="ml-1 w-5 h-5" />
-            </button>
+            {user && (
+              <button
+                className="text-white bg-indigo-400 hover:bg-indigo-500 inline-flex items-center justify-center px-3 py-1 rounded-full"
+                onClick={() => {
+                  dispatch(cartAdd(offer.id));
+                }}
+              >
+                <span className="text-sm uppercase font-extrabold tracking-wide">
+                  Add to Cart
+                </span>
+                <ShoppingCartIconSM className="ml-1 w-5 h-5" />
+              </button>
+            )}
           </div>
         </div>
       </div>
