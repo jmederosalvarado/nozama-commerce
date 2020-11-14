@@ -16,6 +16,7 @@ export default function OfferDetailsPage() {
       } catch (error) {}
     }
 
+    if (!id) return;
     fetchOffer();
   }, [id]);
 

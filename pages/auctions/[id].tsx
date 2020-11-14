@@ -26,6 +26,7 @@ export default function AuctionPage() {
       } catch (error) {}
     }
 
+    if (!id) return;
     fetchAuction();
   }, [id, user]);
 

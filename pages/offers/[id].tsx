@@ -24,6 +24,7 @@ export default function OfferPage() {
       } catch (error) {}
     }
 
+    if (!id) return;
     fetchOffer();
   }, [id]);
 

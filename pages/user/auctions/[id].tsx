@@ -10,13 +10,13 @@ export default function AuctionDetailsPage() {
 
   useEffect(() => {
     async function fetchAuction() {
-      if (!id) return;
       try {
         const { data } = await api.get<AuctionDetails>(`auctions/${id}`);
         setAuction(data);
       } catch (error) {}
     }
 
+    if (!id) return;
     fetchAuction();
   }, [id]);
 
