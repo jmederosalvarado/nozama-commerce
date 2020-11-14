@@ -20,5 +20,5 @@ export type OfferNew = {
   description: string;
   image?: string;
   price: number;
-  seller: string;
+  
 };
