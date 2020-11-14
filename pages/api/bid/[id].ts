@@ -7,11 +7,11 @@ const prisma = new PrismaClient();
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<AuctionPreview>
+  res: NextApiResponse<AuctionDetails>
 ) {
   if (req.method == "POST") {
     const result = await postBid(req);
-    const user = result as Auction;
+    const auct = result as Auction;
 
     if (
       result == "Error in bid creation." ||
@@ -25,11 +25,13 @@ export default async function handler(
       : res
           .status(200)
           .json({
-            name: result.product,
-            id: String(result.id),
-            image: result.image,
-            price: result.currentPrice,
-            bids: result.bids,
+            name: auct.product,
+            id: String(auct.id),
+            image: auct.image,
+            price: auct.currentPrice,
+            bids: auct.bids,
+            description: auct.productDescription,
+            closing: auct.closing
           });
   }
 }

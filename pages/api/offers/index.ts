@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { OfferPreview } from "../../../types/offers";
+import { OfferDetails, OfferPreview } from "../../../types/offers";
 import { Offer, PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -26,24 +26,22 @@ const prisma = new PrismaClient();
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<OfferPreview | OfferPreview[]>
+  res: NextApiResponse<OfferDetails | OfferPreview[]>
 ) {
   if (req.method == "GET") {
     const result = await getAllOffer(req);
     if (result == null) {
       res.status(401).end();
     } else {
-      const offer: OfferPreview[] = [];
-      for (let i = 0; i < result.length; i++) {
-        offer.push({
-          id: String(result[i].id),
-          name: result[i].product,
-          price: result[i].price,
-          rating: result[i].rating,
-          image: result[i].image,
-        });
-      }
-      res.status(200).json(offer);
+      res.status(200).json(
+        result.map((r) => ({
+          id: String(r.id),
+          name: r.product,
+          price: r.price,
+          rating: r.rating,
+          image: r.image,
+        }))
+      );
     }
   } else if (req.method == "POST") {
     const result = await createOffer(req);
@@ -61,6 +59,7 @@ export default async function handler(
             image: offer.image,
             price: offer.price,
             rating: offer.rating,
+            description: offer.productDescription
           });
   }
 }

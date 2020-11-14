@@ -46,13 +46,7 @@ export default async function handler(
       ? res.status(401).end()
       : res
           .status(200)
-          .json({
-            id: String(offer.id),
-            name: offer.product,
-            description: offer.productDescription,
-            price: offer.price,
-            rating: offer.rating,
-          });
+        .end();
   } else if (req.method == "PUT") {
     const offer = await updateOffer(req);
     offer == null
