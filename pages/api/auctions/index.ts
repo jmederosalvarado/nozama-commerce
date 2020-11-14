@@ -78,12 +78,11 @@ async function getAllAuction(req: NextApiRequest) {
 
 async function createAuction(req: NextApiRequest) {
   const {
-    prod,
-    prodDescription,
-    idSeller,
+    name:prod,
+    description:prodDescription,
+    seller:idSeller,
     image,
-    price,
-    rating,
+    price,        
     closing,
   } = req.body;
   const pr = String(prod);
@@ -91,7 +90,7 @@ async function createAuction(req: NextApiRequest) {
   const idS = String(idSeller);
   const im = String(image);
   const pric = parseInt(String(price));
-  const rate = parseInt(String(rating));
+  const rate = 5;
   const closin = String(closing);
 
   try {
