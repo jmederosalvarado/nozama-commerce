@@ -1,11 +1,15 @@
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 import { OfferNew } from "../../../types/offers";
 
 export default function OfferNewPage() {
+  const { user } = useSelector((state: RootState) => state.auth);
   const [offer, setOffer] = useState<OfferNew>({
     name: "",
     description: "",
     price: -1,
+    seller: user && user.username,
   });
 
   return (

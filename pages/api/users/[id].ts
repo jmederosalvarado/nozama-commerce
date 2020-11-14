@@ -12,14 +12,11 @@ export default async function handler(
     const result = await getById(req);
     result == null
       ? res.status(401).end()
-      : res
-          .status(200)
-          .json({
-            username: result.username,
-            password: result.password,
-            name: "",
-            image: result.image,
-          });
+      : res.status(200).json({
+          username: result.username,
+          password: result.password,
+          image: result.image,
+        });
   } else if (req.method == "DELETE") {
     const result = await deleteUser(req);
     const user = result as User;
@@ -32,14 +29,11 @@ export default async function handler(
     const result = await updateUser(req);
     result == null
       ? res.status(401).end()
-      : res
-          .status(200)
-          .json({
-            username: result.username,
-            password: result.password,
-            image: result.image,
-            name: "",
-          });
+      : res.status(200).json({
+          username: result.username,
+          password: result.password,
+          image: result.image,
+        });
   }
 }
 

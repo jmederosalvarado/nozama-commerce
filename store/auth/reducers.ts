@@ -8,7 +8,6 @@ const initialState: AuthState = {
   user: {
     username: "jmederos",
     password: "jmederos",
-    name: "Jorge Mederos",
   },
 };
 

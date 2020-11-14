@@ -56,23 +56,6 @@ export default function UserDetailsPage() {
       <div className="flex flex-col items-end mt-2">
         <div className="mt-2">
           <label className="text-gray-600 font-bold">
-            Name:
-            <input
-              className="ml-2 bg-transparent border-b-2 focus:outline-none text-gray-700 align-bottom w-56"
-              value={user.name}
-              onChange={(e) => {
-                e.preventDefault();
-                const name = e.target.value;
-                setUser((user) => ({
-                  ...user,
-                  name: name,
-                }));
-              }}
-            />
-          </label>
-        </div>
-        <div className="mt-5">
-          <label className="text-gray-600 font-bold">
             Password:
             <input
               className="ml-2 bg-transparent border-b-2 focus:outline-none text-gray-700 align-bottom w-56"

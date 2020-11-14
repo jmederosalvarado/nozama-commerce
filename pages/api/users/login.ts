@@ -36,13 +36,10 @@ export default async function handler(
     res.status(401).end();
   } else {
     if (passw === userByUsername.password) {
-      res
-        .status(200)
-        .json({
-          username: userByUsername.username,
-          password: userByUsername.password,
-          name: "",
-        });
+      res.status(200).json({
+        username: userByUsername.username,
+        password: userByUsername.password,
+      });
     } else {
       res.status(401).end();
     }

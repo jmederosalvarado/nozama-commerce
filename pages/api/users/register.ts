@@ -36,14 +36,11 @@ export default async function handler(
     const result = await prisma.user.create({
       data: { username: user, password: passw, image: im },
     });
-    res
-      .status(200)
-      .json({
-        username: result.username,
-        password: result.password,
-        image: result.image,
-        name: "",
-      });
+    res.status(200).json({
+      username: result.username,
+      password: result.password,
+      image: result.image,
+    });
   } catch (Error) {
     res.status(400).end();
   }
