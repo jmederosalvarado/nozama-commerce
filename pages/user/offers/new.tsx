@@ -13,6 +13,7 @@ export default function OfferNewPage() {
     description: "",
     price: -1,
     seller: user && user.username,
+    image: "",
   });
 
   return (
