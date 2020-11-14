@@ -34,6 +34,7 @@ export default async function handler(
             description: result.productDescription,
             price: result.price,
             rating: result.rating,
+            image: result.image
           });
   } else if (req.method == "DELETE") {
     const result = await deleteOffer(req);
@@ -59,6 +60,7 @@ export default async function handler(
             description: offer.productDescription,
             price: offer.price,
             rating: offer.rating,
+            image: offer.image
           });
   }
 }
@@ -84,16 +86,19 @@ async function deleteOffer(req: NextApiRequest) {
 }
 
 async function updateOffer(req: NextApiRequest) {
-  const { id, product, productDescription, price } = req.body;
+  const{id} =req.query
+  const {  name:product, description:productDescription, price,rating,image } = req.body;
 
   const ID = parseInt(String(id));
   const prod = String(product);
   const prodD = String(productDescription);
   const pric = parseInt(String(price));
+  const rate = parseInt(String(rating));
+  const im = String(image)
 
   const result = await prisma.offer.update({
     where: { id: ID },
-    data: { product: prod, productDescription: prodD, price: pric },
+    data: { product: prod, productDescription: prodD, price: pric ,rating:rate, image:im},
   });
   return result;
 }

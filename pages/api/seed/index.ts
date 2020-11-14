@@ -4,19 +4,21 @@ import { NextApiRequest, NextApiResponse } from "next";
 import images from "./images.json";
 
 const prisma = new PrismaClient();
-
+//var item = items[Math.floor(Math.random() * items.length)];
 export default async function populate(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   for (let i = 0; i < 100; i++) {
     var user1 = faker.internet.userName();
-    var ima1 = faker.image.dataUri(400, 400);
+    // var ima1 = faker.image.dataUri(400, 400);
+    var ima1 = images[Math.floor(Math.random()*images.length)]
     var pass1 = faker.internet.password();
     var rat1 = faker.random.number({ min: 1, max: 5 });
 
     var user2 = faker.internet.userName();
-    var ima2 = faker.image.dataUri(400, 400);
+    // var ima2 = faker.image.dataUri(400, 400);
+    var ima2 = images[Math.floor(Math.random()*images.length)]
     var pass2 = faker.internet.password();
     var rat2 = faker.random.number({ min: 1, max: 5 });
 
@@ -29,7 +31,8 @@ export default async function populate(
     date.setHours(date.getHours() + rat1);
     var almostDate = date.toISOString().split(".")[0];
 
-    var ima3 = faker.image.dataUri(400, 400);
+    // var ima3 = faker.image.dataUri(400, 400);
+    var ima3 = images[Math.floor(Math.random()*images.length)]
     var prod = faker.commerce.productName();
     var prodDescrition = faker.commerce.productDescription();
     var bids = faker.random.number({ min: 1, max: 15 });
@@ -42,18 +45,7 @@ export default async function populate(
       await prisma.user.create({
         data: { username: user2, password: pass2, image: ima2, rating: rat2 },
       });
-      await prisma.bankAccount.create({
-        data: {
-          number: parseInt(String(bank1)),
-          balance: parseFloat(String(bala1)),
-        },
-      });
-      await prisma.bankAccount.create({
-        data: {
-          number: parseInt(String(bank2)),
-          balance: parseFloat(String(bala2)),
-        },
-      });
+      
 
       if (i % 2 == 0) {
         await prisma.offer.create({
@@ -81,6 +73,18 @@ export default async function populate(
           },
         });
       }
+      await prisma.bankAccount.create({
+        data: {
+          number: parseInt(String(bank1)),
+          balance: parseFloat(String(bala1)),
+        },
+      });
+      await prisma.bankAccount.create({
+        data: {
+          number: parseInt(String(bank2)),
+          balance: parseFloat(String(bala2)),
+        },
+      });
     } catch (error) {
       console.log(error);
     }

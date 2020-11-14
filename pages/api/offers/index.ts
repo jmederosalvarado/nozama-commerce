@@ -72,13 +72,13 @@ async function getAllOffer(req: NextApiRequest) {
 }
 
 async function createOffer(req: NextApiRequest) {
-  const { prod, prodDescription, idSeller, image, price, rating } = req.body;
+  const { name:prod, description:prodDescription,seller: idSeller, image, price} = req.body;
   const pr = String(prod);
   const prD = String(prodDescription);
   const idS = String(idSeller);
   const im = String(image);
   const pric = parseInt(String(price));
-  const rate = parseInt(String(rating));
+  const rate = 5;
 
   try {
     const result = await prisma.offer.create({
