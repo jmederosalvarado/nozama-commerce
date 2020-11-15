@@ -20,6 +20,7 @@ export default async function handler(
         user.push({
           username: result[i].username,
           password: result[i].username,
+          image: result[i].image,
         });
       }
       res.status(200).json(user);
@@ -35,7 +36,11 @@ export default async function handler(
       ? res.status(401).end()
       : res
           .status(200)
-          .json({ username: user.username, password: user.password });
+          .json({
+            username: user.username,
+            password: user.password,
+            image: user.image,
+          });
   }
 }
 

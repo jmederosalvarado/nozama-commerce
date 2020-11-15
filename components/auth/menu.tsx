@@ -107,6 +107,7 @@ export default function AuthMenu() {
               const { data } = await api.post<UserPreview>("/users/register", {
                 username: username,
                 password: password,
+                image: "",
               });
               dispatch(login(data));
             } catch (error) {}

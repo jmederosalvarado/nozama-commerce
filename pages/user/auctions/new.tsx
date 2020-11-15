@@ -14,6 +14,7 @@ export default function AuctionNewPage() {
     price: -1,
     seller: user && user.username,
     duration: -1,
+    image: "",
   });
 
   return (

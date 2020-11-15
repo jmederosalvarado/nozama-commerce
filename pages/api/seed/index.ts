@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import faker from "faker";
 import { NextApiRequest, NextApiResponse } from "next";
-import {products,users} from "./images.json";
+import { products, users } from "./images.json";
 
 const prisma = new PrismaClient();
 //var item = items[Math.floor(Math.random() * items.length)];
@@ -98,7 +98,6 @@ export default async function populate(
           },
         });
       }
-
     } catch (error) {
       console.log(error);
     }
