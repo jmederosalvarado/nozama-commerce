@@ -36,34 +36,52 @@ export default async function handler(
 
 async function postBid(req: NextApiRequest) {
   //To register, it is required name  username, email, password
-  const { bidder, price , bankaccount} = req.body;
+  const { bidder, price, bankaccount } = req.body;
   const { id } = req.query;
 
   const ID = parseInt(String(id));
   const username = String(bidder);
   const pric = parseInt(String(price));
-  const bankacc = parseInt(bankaccount as string)
+  const bankacc = parseInt(bankaccount as string);
 
   try {
     const auction = await prisma.auction.findFirst({ where: { id: ID } });
-     
+
     if (auction.currentPrice >= pric) {
       return "Error, bid must higher than the current one.";
     }
 
-    if(!bankaccount)
-    {
-      await prisma.auction.update({where:{id:ID},data:{bankaccount:bankacc}})
-      const account = await prisma.bankAccount.findFirst({where:{number:bankacc}})
-      await prisma.bankAccount.update({where:{number:bankacc},data:{balance:account.balance-pric}})
-    }
-    else
-    {
-      const account_0 = await prisma.bankAccount.findFirst({where:{number:auction.bankaccount}})
-      await prisma.bankAccount.update({where:{number:auction.bankaccount},data:{balance: account_0.balance+auction.currentPrice}})
-      await prisma.auction.update({where:{id:ID},data:{bankaccount:bankacc}})
-      const account = await prisma.bankAccount.findFirst({where:{number:bankacc}})
-      await prisma.bankAccount.update({where:{number:bankacc},data:{balance:account.balance-pric}})
+    if (!auction.bankaccount) {
+      await prisma.auction.update({
+        where: { id: ID },
+        data: { bankaccount: bankacc },
+      });
+      const account = await prisma.bankAccount.findFirst({
+        where: { number: bankacc },
+      });
+      await prisma.bankAccount.update({
+        where: { number: bankacc },
+        data: { balance: account.balance - pric },
+      });
+    } else {
+      const account_0 = await prisma.bankAccount.findFirst({
+        where: { number: auction.bankaccount },
+      });
+      await prisma.bankAccount.update({
+        where: { number: auction.bankaccount },
+        data: { balance: account_0.balance + auction.currentPrice },
+      });
+      await prisma.auction.update({
+        where: { id: ID },
+        data: { bankaccount: bankacc },
+      });
+      const account = await prisma.bankAccount.findFirst({
+        where: { number: bankacc },
+      });
+      await prisma.bankAccount.update({
+        where: { number: bankacc },
+        data: { balance: account.balance - pric },
+      });
     }
 
     const update = await prisma.auction.update({
