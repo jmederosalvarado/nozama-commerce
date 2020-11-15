@@ -9,6 +9,30 @@ export default async function populate(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  await prisma.bankAccount.create({
+    data: {
+      number: 1000,
+      balance: 15400,
+    },
+  });
+  await prisma.bankAccount.create({
+    data: {
+      number: 2000,
+      balance: 8000,
+    },
+  });
+  await prisma.bankAccount.create({
+    data: {
+      number: 3000,
+      balance: 10000,
+    },
+  });
+  await prisma.bankAccount.create({
+    data: {
+      number: 4000,
+      balance: 5000,
+    },
+  });
   for (let i = 0; i < 100; i++) {
     var user1 = faker.internet.userName();
     // var ima1 = faker.image.dataUri(400, 400);
@@ -72,18 +96,7 @@ export default async function populate(
           },
         });
       }
-      await prisma.bankAccount.create({
-        data: {
-          number: parseInt(String(bank1)),
-          balance: parseFloat(String(bala1)),
-        },
-      });
-      await prisma.bankAccount.create({
-        data: {
-          number: parseInt(String(bank2)),
-          balance: parseFloat(String(bala2)),
-        },
-      });
+
     } catch (error) {
       console.log(error);
     }
