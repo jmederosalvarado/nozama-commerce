@@ -17,6 +17,7 @@ export default function AuctionPage() {
   const [auction, setAuction] = useState<AuctionDetails>();
   const { user } = useSelector((state: RootState) => state.auth);
   const [bid, setBid] = useState(-1);
+  const [bankAccount, setBankAccount] = useState<string>("");
 
   useEffect(() => {
     async function fetchAuction() {
@@ -80,39 +81,52 @@ export default function AuctionPage() {
                     {completed ? "closed" : `${hours}:${minutes}:${seconds}`}
                   </span>
                 </div>
-                <div className="mt-2 md:mt-3 w-full flex items-center justify-center">
-                  {user && !completed && (
-                    <div className="rounded-full overflow-hidden shadow-xl flex items-center justify-center relative pl-6 w-32">
-                      <button
-                        className="bg-indigo-400 hover:bg-indigo-500 flex items-center justify-center absolute left-0 inset-y-0 pl-1 pr-px"
-                        onClick={async () => {
-                          try {
-                            const { data } = await api.post<AuctionDetails>(
-                              `bid/${auction.id}`,
-                              {
-                                bidder: user.username,
-                                price: bid,
-                              }
-                            );
-                            setAuction(data);
-                          } catch (error) {}
-                        }}
-                      >
-                        <CheckIconSM className="w-5 h-5 text-white" />
-                      </button>
+                {user && !completed && (
+                  <>
+                    <div className="mt-2 flex items-center justify-center text-gray-600">
                       <input
-                        type="number"
-                        value={bid === -1 ? "" : bid}
+                        className="min-w-0 border rounded-lg px-2 py-1 text-center text-sm font-bold uppercase focus:outline-none"
+                        placeholder="Bank Account"
+                        value={bankAccount}
                         onChange={(e) => {
-                          e.preventDefault();
-                          const bid = e.target.value;
-                          setBid(bid ? Number.parseFloat(bid) : -1);
+                          setBankAccount(e.target.value);
                         }}
-                        className="min-w-0 focus:outline-none bg-white text-center shadow-inner text-gray-600 font-bold"
                       />
                     </div>
-                  )}
-                </div>
+                    <div className="mt-2 md:mt-3 w-full flex items-center justify-center">
+                      <div className="rounded-full overflow-hidden shadow-xl flex items-center justify-center relative pl-6 w-32">
+                        <button
+                          className="bg-indigo-400 hover:bg-indigo-500 flex items-center justify-center absolute left-0 inset-y-0 pl-1 pr-px"
+                          onClick={async () => {
+                            try {
+                              const { data } = await api.post<AuctionDetails>(
+                                `bid/${auction.id}`,
+                                {
+                                  bidder: user.username,
+                                  price: bid,
+                                  bankaccount: bankAccount,
+                                }
+                              );
+                              setAuction(data);
+                            } catch (error) {}
+                          }}
+                        >
+                          <CheckIconSM className="w-5 h-5 text-white" />
+                        </button>
+                        <input
+                          type="number"
+                          value={bid === -1 ? "" : bid}
+                          onChange={(e) => {
+                            e.preventDefault();
+                            const bid = e.target.value;
+                            setBid(bid ? Number.parseFloat(bid) : -1);
+                          }}
+                          className="min-w-0 focus:outline-none bg-white text-center shadow-inner text-gray-600 font-bold"
+                        />
+                      </div>
+                    </div>
+                  </>
+                )}
               </>
             )}
           />

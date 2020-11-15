@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = "postgres://rxcotjlsmeftyj:4abda14ae89d1956d8d205b4a7414f87dc75e273877e2d4265d9bd220375c056@ec2-34-237-247-76.compute-1.amazonaws.com:5432/dcm5up7clk4lfb"
+  provider = "sqlite"
+  url      = "file:./nozama.db"
 }
 
 model Auction {
