@@ -22,14 +22,13 @@ export default async function handler(
   res: NextApiResponse<UserPreview>
 ) {
   //To login is either username or email
-  const { login, password } = req.query;
+  const { username, password } = req.query;
 
   const passw = String(password);
-  const email = String(login);
-  const username = String(login);
+  const usern = String(username);
 
   const userByUsername = await prisma.user.findFirst({
-    where: { username: username },
+    where: { username: usern },
   });
 
   if (userByUsername == null) {
@@ -42,6 +41,7 @@ export default async function handler(
         image: userByUsername.image,
       });
     } else {
+      console.error("password");
       res.status(401).end();
     }
   }
