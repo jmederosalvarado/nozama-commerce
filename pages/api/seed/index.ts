@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import faker from "faker";
 import { NextApiRequest, NextApiResponse } from "next";
-import {images} from "./images.json";
+import { products, users } from "./images.json";
 
 const prisma = new PrismaClient();
 //var item = items[Math.floor(Math.random() * items.length)];
@@ -9,41 +9,40 @@ export default async function populate(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-
   await prisma.bankAccount.create({
     data: {
       number: 1000,
-      balance: 12500,
+      balance: 15400,
     },
   });
   await prisma.bankAccount.create({
     data: {
       number: 2000,
-      balance: 10000,
+      balance: 8000,
     },
   });
   await prisma.bankAccount.create({
     data: {
       number: 3000,
-      balance: 6000,
+      balance: 10000,
     },
   });
   await prisma.bankAccount.create({
     data: {
       number: 4000,
-      balance: 7500,
+      balance: 5000,
     },
   });
   for (let i = 0; i < 10; i++) {
     var user1 = faker.internet.userName();
     // var ima1 = faker.image.dataUri(400, 400);
-    var ima1 = images[Math.floor(Math.random() * images.length)];
+    var ima1 = users[Math.floor(Math.random() * users.length)];
     var pass1 = faker.internet.password();
     var rat1 = faker.random.number({ min: 1, max: 5 });
 
     var user2 = faker.internet.userName();
     // var ima2 = faker.image.dataUri(400, 400);
-    var ima2 = images[Math.floor(Math.random() * images.length)];
+    var ima2 = users[Math.floor(Math.random() * users.length)];
     var pass2 = faker.internet.password();
     var rat2 = faker.random.number({ min: 1, max: 5 });
 
@@ -57,7 +56,7 @@ export default async function populate(
     var almostDate = date.toISOString();
 
     // var ima3 = faker.image.dataUri(400, 400);
-    var ima3 = images[Math.floor(Math.random() * images.length)];
+    var ima3 = products[Math.floor(Math.random() * products.length)];
     var prod = faker.commerce.productName();
     var prodDescrition = faker.commerce.productDescription();
     var bids = faker.random.number({ min: 1, max: 15 });
@@ -97,7 +96,6 @@ export default async function populate(
           },
         });
       }
-
     } catch (error) {
       console.log(error);
     }
