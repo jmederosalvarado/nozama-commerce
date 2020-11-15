@@ -36,11 +36,12 @@ export default async function handler(
 
 async function postCheckout(req: NextApiRequest) {
   const { offers, bankaccount } = req.body;
-  const offs = offers as Offer[];
+  const offs = offers as string[];
   var pric = 0;
   const bkacct = parseInt(String(bankaccount));
   for (let i = 0; i < offs.length; i++) {
-    pric += offs[i].price;
+    const off = await prisma.offer.findFirst({where:{id: parseInt(offs[i])}})
+    pric += off.price;;
   }
 
   try {

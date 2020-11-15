@@ -1,7 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import faker from "faker";
 import { NextApiRequest, NextApiResponse } from "next";
-import images from "./images.json";
+import {images} from "./images.json";
 
 const prisma = new PrismaClient();
 //var item = items[Math.floor(Math.random() * items.length)];
@@ -9,7 +9,32 @@ export default async function populate(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  for (let i = 0; i < 100; i++) {
+
+  await prisma.bankAccount.create({
+    data: {
+      number: 1000,
+      balance: 12500,
+    },
+  });
+  await prisma.bankAccount.create({
+    data: {
+      number: 2000,
+      balance: 10000,
+    },
+  });
+  await prisma.bankAccount.create({
+    data: {
+      number: 3000,
+      balance: 6000,
+    },
+  });
+  await prisma.bankAccount.create({
+    data: {
+      number: 4000,
+      balance: 7500,
+    },
+  });
+  for (let i = 0; i < 10; i++) {
     var user1 = faker.internet.userName();
     // var ima1 = faker.image.dataUri(400, 400);
     var ima1 = images[Math.floor(Math.random() * images.length)];
@@ -72,18 +97,7 @@ export default async function populate(
           },
         });
       }
-      await prisma.bankAccount.create({
-        data: {
-          number: parseInt(String(bank1)),
-          balance: parseFloat(String(bala1)),
-        },
-      });
-      await prisma.bankAccount.create({
-        data: {
-          number: parseInt(String(bank2)),
-          balance: parseFloat(String(bala2)),
-        },
-      });
+
     } catch (error) {
       console.log(error);
     }
