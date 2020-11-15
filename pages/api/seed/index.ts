@@ -33,6 +33,8 @@ export default async function populate(
       balance: 5000,
     },
   });
+
+  //cambiado pa que solo haga 10 iteraciones
   for (let i = 0; i < 10; i++) {
     var user1 = faker.internet.userName();
     // var ima1 = faker.image.dataUri(400, 400);
